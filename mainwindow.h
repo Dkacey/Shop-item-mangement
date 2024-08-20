@@ -1,15 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "transaction.h"
 #include <QMainWindow>
 
-class QTreeView;
-class TreeModel;
-class Customers;
-class Item;
-class ItemList;
-class ItemListMemento;
+class QPlainTextEdit;
+class QAction;
+class QUdpSocket;
 
 class MainWindow : public QMainWindow
 {
@@ -20,29 +16,15 @@ public:
     ~MainWindow();
 
 private slots:
-    void broadcastModelAsXml();
-    void addCustomer();
-    void callItemAddDialog();
-    void addItemToList(Item *);
-    void addTransaction();
-    void addTransactionToModel(QString c, Transaction t);
-    void restoreItemList();
+    void listen();
+    void processPendingDatagrams();
 
 private:
-    QAction *broadcastAction;
+    QPlainTextEdit *displayfield;
+    QAction *listenAction;
     QAction *exitAction;
-    QAction *addCustomerAction;
-    QAction *addItemAction;
-    QAction *addTransactionAction;
-    QAction *restoreItemListAction;
+    QUdpSocket *udpSocket;
 
-    QTreeView *treeview;
-    TreeModel *treemodel;
-    Customers *customerList;
-    ItemList *itemList;
-    ItemListMemento *memento;
-
-    void setupGui();
     void closeEvent(QCloseEvent *event);
 };
 #endif // MAINWINDOW_H
